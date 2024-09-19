@@ -54,15 +54,17 @@ import kotlin.reflect.KClass
 
 // TODO API-PUBLIC Document platform specific internals (RealmInitializer, etc.)
 // TODO Public due to being accessed from `SyncedRealmContext`
-public class RealmImpl private constructor(
+public open class RealmImpl constructor(
     configuration: InternalConfiguration,
+    nScheduler: LiveRealmContext? = null,
+    wScheduler: LiveRealmContext? = null,
 ) : BaseRealmImpl(configuration), Realm, InternalTypedRealm {
 
     public val notificationScheduler: LiveRealmContext =
-        configuration.notificationDispatcherFactory.createLiveRealmContext()
+        nScheduler ?: configuration.notificationDispatcherFactory.createLiveRealmContext()
 
     public val writeScheduler: LiveRealmContext =
-        configuration.writeDispatcherFactory.createLiveRealmContext()
+        wScheduler ?: configuration.writeDispatcherFactory.createLiveRealmContext()
 
     internal val realmScope =
         CoroutineScope(SupervisorJob() + notificationScheduler.dispatcher)
