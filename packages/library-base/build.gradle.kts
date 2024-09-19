@@ -119,7 +119,7 @@ kotlin {
     // Anything inside `io.realm.kotlin.internal.*` is considered internal regardless of their
     // visibility modifier and will be stripped from Dokka, but will unfortunately still
     // leak into auto-complete in the IDE.
-    explicitApi = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
+    // explicitApi = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 }
 
 // Using a custom name module for internal methods to avoid default name mangling in Kotlin compiler which uses the module
